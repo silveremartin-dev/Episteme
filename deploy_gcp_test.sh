@@ -55,8 +55,8 @@ gcloud compute instances create "$INSTANCE_NAME" \
     # 3. Formally install local MPJ dependency
     mvn install:install-file -Dfile=libs/mpj.jar -DgroupId=org.mpjexpress -DartifactId=mpj -Dversion=0.44 -Dpackaging=jar
     
-    # 4. Build exactly the server module required for Docker (to avoid full project OOM)
-    mvn package -pl episteme-server -am -DskipTests
+    # 4. Build exactly the server and benchmark modules required for Docker (to avoid full project OOM)
+    mvn package -pl episteme-server,episteme-benchmarks -am -DskipTests -Djavacpp.platform=linux-x86_64
     
     # 5. Build the GPU container
     docker build -t episteme-gpu-test -f docker/Dockerfile.gpu .
